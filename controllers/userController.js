@@ -12,7 +12,6 @@ module.exports.login = async (req, res) => {
         if (found) {
             const password = md5(req.body.password);
             if (password === found.password) {
-                console.log("enter=====",id);
                 const token =await jwt.sign(found.id,config.get("secretKey"));
                 console.log(token);
                 res.status(status.accepted).json({ success: true, message: responses.responseMessages.LOGGED_IN });
@@ -26,6 +25,23 @@ module.exports.login = async (req, res) => {
         }
     } catch (error) {
         console.error(responses.responseMessages.INCORRECT_CREDENTIALS);
+    }
+}
+
+module.exports.getProfile = async (req, res) => {
+    try {
+        const token = req.header('authorization');
+        
+        if (token) {
+            const decode = await jwt.verify(token,config.get("secretKey"));
+            let userProfile = await models.User.findById(decode);
+            res.json({success:false,restaurantProfile:userProfile});
+        }
+        else {
+            res.send("Invalid Token");
+        }
+    } catch (error) {
+        res.json({success:false,message:responses.responseMessages.TOKEN_MISSING});
     }
 }
 

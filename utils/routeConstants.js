@@ -9,7 +9,8 @@ const routes = {
         updateProfile : "/updateProfile"
     },
     userAuth:{
-        login : "/loginUser"
+        login : "/loginUser",
+        getProfile : "/getProfile"
     }
 };
 
