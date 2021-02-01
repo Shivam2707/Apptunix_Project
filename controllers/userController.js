@@ -1,21 +1,33 @@
 const services = require("../services");
 const status = require("../utils/statusCodes")
 const {models} = require("../models");
+const jwt = require('jsonwebtoken');
+const responses= require('../response/responses')
+const md5 = require('md5');
+const config = require("config");
 
-module.exports.register = async(req, res) => {
+module.exports.login = async (req, res) => {
     try {
-         const user = await services.createModel(models.User, req.body);
-         res.status(200).json({success: true, message: 'User add success !!'})
+        const found = await services.findOne(models.User, "email", req.body.email);
+        if (found) {
+            const password = md5(req.body.password);
+            if (password === found.password) {
+                console.log("enter=====",id);
+                const token =await jwt.sign(found.id,config.get("secretKey"));
+                console.log(token);
+                res.status(status.accepted).json({ success: true, message: responses.responseMessages.LOGGED_IN });
+            }
+            else {
+                res.json({ success: false, message: responses.responseMessages.INCORRECT_CREDENTIALS });
+            }
+        }
+        else {
+            res.send("Email not found");
+        }
     } catch (error) {
-        throw new Error(error.message)
+        console.error(responses.responseMessages.INCORRECT_CREDENTIALS);
     }
 }
 
 
-module.exports.dashboard = async() => {
-    try {
-        
-    } catch (error) {
-        
-    }
-}
+
