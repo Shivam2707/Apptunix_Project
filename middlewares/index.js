@@ -7,7 +7,7 @@ const middlewares = {
     // check token here
     const token = req.header("authorization");
         if (token){
-            const verified = jwt.verify(token, config.get("secretKey"));
+            const verified = jwt.verify(t5oken, config.get("secretKey"));
             req.user = verified.id;
             next();
         } else {

@@ -24,7 +24,7 @@ module.exports.register = async (req, res) => {
 module.exports.login = async (req, res) => {
     try {
         const found = await services.findOne(models.Admin, "email", req.body.email);
-        //console.log(found);
+        console.log(found);
         if (found) {
             const payload = {
                 id: found._id
@@ -116,10 +116,8 @@ module.exports.forgotPassword = async (req, res) => {
 
 module.exports.resetPassword = async (req, res) => {
     try {
-        //console.log("---------------------------------------");
         const id = req.params.id;
         const isExist = await services.findOne(models.Admin, "_id", id);
-        //  console.log(isExist, "isE")
         if (isExist) {
             const password = md5(req.body.password);
             if(isExist.password===password){
