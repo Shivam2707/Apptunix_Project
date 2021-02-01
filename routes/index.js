@@ -5,5 +5,5 @@ const router = express.Router();
 
 
 router.use("/admin/auth",adminRoutes);
-router.use("/userauth",userRoutes);
+router.use("/user/auth",userRoutes);
 module.exports = router;

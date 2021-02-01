@@ -3,10 +3,12 @@ const routes = {
         register: "/register",
         login : "/login",
         addRestaurant : "/addRestaurant",
-        verifyRestaurant : "/verifyRestaurant/:id"
+        verifyRestaurant : "/verifyRestaurant/:id",
+        forgotPassword : "/forgotPassword",
+        getProfile : "/getProfile",
+        updateProfile : "/updateProfile"
     },
     userAuth:{
-        register: "/resgisterUser",
         login : "/loginUser"
     }
 };

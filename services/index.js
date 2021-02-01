@@ -8,17 +8,18 @@ const services = {
         const modelObj = new Model(body);
         return await modelObj.save();
     },
-    findOne: async (Model, k, v) => {
+    findOne: async (Model, key, value) => {
        // console.log(v,k,"que")
         //const val = ObjectId(v);
         //console.log(v,typeof(v),"-----------v--------------");
         const query = {};
-        query[k] =v ;
-        console.log(query,"que")
+        query[key] =value;
+       // console.log(query,"que")
         const ans = await Model.findOne(query);
         return ans;
     },
     genToken: (payload, key) => {
+        console.log("inside gen token",payload);
         const token = jwt.sign(payload, key);
         //  console.log(token)
         return token;
@@ -27,13 +28,12 @@ const services = {
        // restaurantId = payload.restaurantId;
        // console.log(restaurantId);
         sgMail.setApiKey(config.get("sendGridKey"));
-        link=`http://localhost:8000/api/admin/auth/verifyRestaurant/${payload.restaurantId}`;
+        // link=`http://localhost:8000/api/admin/auth/verifyRestaurant/${payload.restaurantId}`;
         const msg = {
             to: payload.to, // Change to your recipient
             from: payload.from, // Change to your verified sender
             subject: payload.subject,
-           // text: 'http://localhost:8000/api/admin/auth/addRestaurant/:${restaurantId}',
-            html :" <a href="+link+">Click here to verify</a>"
+            html :" <a href="+payload.link+">Click here to verify</a>"
            // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
         }
         sgMail

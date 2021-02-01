@@ -8,5 +8,9 @@ exports.responseMessages = {
     LOGGED_IN: "Log in successfull",
     INCORRECT_CREDENTIALS : "Invalid Credentials",
     SIGNED_UP : "Successfully Signed up ",
-    ADDED : "Restaurant successfully added"
+    ADDED : "Restaurant successfully added",
+    EMAIL_NOT_FOUND : "Email not found",
+    PASS_CHANGED : " Password has been changed successfully",
+    NOT_EXIST : "User does not exist"
+
 }
