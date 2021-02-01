@@ -10,7 +10,8 @@ const routes = {
     },
     userAuth:{
         login : "/loginUser",
-        getProfile : "/getProfile"
+        getProfile : "/getProfile",
+        updateProfile:"/updateProfile"
     }
 };
 

@@ -13,10 +13,9 @@ module.exports.register = async (req, res) => {
         req.body.password = md5(req.body.password);
         let admin = await services.createModel(models.Admin, req.body);
         const payload = admin.id;
-        console.log(payload);
         const token = services.genToken(payload, config.get("secretKey"));
         res.send(token);
-        res.status(status.created).json({ success: true, message: responses.responseMessages.SIGNED_UP });
+       // res.status(status.created).json({ success: true, message: responses.responseMessages.SIGNED_UP });
     } catch (error) {
         res.json({ success: false, message: responses.responseMessages.NOT_CREATED });
     }
@@ -58,11 +57,6 @@ module.exports.addRestaurant = async (req, res) => {
         else {
             let restaurantDetails = await services.createModel(models.User, req.body);
             const id = restaurantDetails.id;
-            //console.log(id);
-            // if(restaurantDetails){
-            //     res.status(status.created).json({success:true, message:responses.responseMessages.ADDED});
-            // }
-            // const email = restaurantDetails.email;
             const payload = {
                 to: email,
                 from: "shivam@apptunix.com",
@@ -71,7 +65,6 @@ module.exports.addRestaurant = async (req, res) => {
                 text: "hfnjwkf"
             }
             res.json({ status: 200, restaurantDetails: restaurantDetails });
-            //res.json({user:payload.restaurantDetails});
             const mail = await services.sendEmail(payload);
         }
     } catch (error) {
@@ -129,6 +122,9 @@ module.exports.resetPassword = async (req, res) => {
         //  console.log(isExist, "isE")
         if (isExist) {
             const password = md5(req.body.password);
+            if(isExist.password===password){
+                throw "Password is same";
+            }
             const updated = await models.User.findByIdAndUpdate({ _id: id }, { password: password }, { new: true });
             res.json({ success: true, message: responses.responseMessages.PASS_CHANGED })
         }
@@ -136,7 +132,8 @@ module.exports.resetPassword = async (req, res) => {
             res.json({ success: false, message: responses.responseMessages.NOT_EXIST });
         }
     } catch (error) {
-        res.json({ success: false, message: responses.responseMessages.NOT_CREATED });
+        res.send(error);
+       // res.json({ success: false, message: responses.responseMessages.NOT_CREATED });
     }
 }
 

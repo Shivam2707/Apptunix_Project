@@ -45,5 +45,21 @@ module.exports.getProfile = async (req, res) => {
     }
 }
 
+module.exports.updateProfile = async(req,res) =>{
+    try {
+        const token = req.header('authorization');
+        if (token) {
+            const decode = await jwt.verify(token,config.get("secretKey"));
+            let updatedProfile = await models.User.findByIdAndUpdate(decode, req.body,{new:true});
+            res.json({success:false,updatedProfile:updatedProfile});
+        }
+        else {
+            res.send("Invalid Token");
+        }
+    } catch (error) {
+        res.json({success:false,message:responses.responseMessages.TOKEN_MISSING});
+    }
+}
+
 
 
