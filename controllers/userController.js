@@ -11,7 +11,6 @@ module.exports.login = async (req, res) => {
         const found = await services.findOne(models.User, "email", req.body.email);
         if (found) {
             const password = md5(req.body.password);
-            console.log("jkfb");
             if (password === found.password) {
                 console.log("enter=====",id);
                 const token =await jwt.sign(found.id,config.get("secretKey"));
