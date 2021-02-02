@@ -9,7 +9,7 @@ const router = express.Router();
 //router.get(routes.userAuth.register, userController.register);
 // router.post("/dashboard", middlewares.verifyToken ,userController.dashboard)
 
-router.post(routes.adminAuth.register,adminController.register);
+router.post(routes.adminAuth.register,middlewares.validator,adminController.register);
 router.post(routes.adminAuth.login,middlewares.verifyToken,adminController.login);
 router.post(routes.adminAuth.addRestaurant,middlewares.verifyToken,adminController.addRestaurant);
 router.get("/verifyRestaurant/:id",adminController.verifyRestaurant);
