@@ -7,7 +7,7 @@ const middlewares = {
     // check token here
     const token = req.header("authorization");
         if (token){
-            const verified = jwt.verify(t5oken, config.get("secretKey"));
+            const verified = jwt.verify(token, config.get("secretKey"));
             req.user = verified.id;
             next();
         } else {
@@ -15,14 +15,12 @@ const middlewares = {
         }
     },
     validator : async (req,res,next) =>{
-        //console.log(req.body.email);
         const email = req.body.email;
         const password = req.body.password;
         const schema = joi.object({
-            email : joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com'] } }),
-            password: joi.string().min(2).required()
+            email : joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com'] } }).required(),
+            password: joi.string().min(5).required()
         })
-        //console.log(email);
         try {
             const value = await schema.validateAsync({email,password});
             next();

@@ -2,5 +2,6 @@
     "port" : 3004,
     "mongo_uri": "mongodb://localhost:27017/restrauntDB",
     "secretKey": "secretKey101",
-    "sendGridKey" : "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"
+    "sendGridKey" : "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",
+    "From" : "shivam@apptunix.com"
 }

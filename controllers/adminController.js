@@ -59,7 +59,7 @@ module.exports.addRestaurant = async (req, res) => {
             const id = restaurantDetails.id;
             const payload = {
                 to: email,
-                from: "shivam@apptunix.com",
+                from: config.get("From"),
                 subject: "Thanks",
                 link: `http://localhost:8000/api/admin/auth/verifyRestaurant/${id}`,
                 text: "hfnjwkf"
